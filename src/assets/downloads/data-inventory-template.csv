@@ -1,8 +1,0 @@
-Data Inventory / Record of Processing Activities - Template by Sentinel Privacy (sentinelprivacy.co.za) - General starter template, not legal advice
-Processing activity,Category of personal information,Special personal information? (Y/N),Data subjects (whose data),Purpose of processing,Lawful basis,Source (where obtained),Where stored / system,Who has access,Shared with (operators/3rd parties),Cross-border? (country),Retention period,Security measures,Owner
-Example: Customer orders,"Name, email, phone, delivery address",N,Customers,Fulfil and deliver orders,Contract,Website checkout,Online store + accounting system,"Sales, Finance",Courier; payment gateway,No,7 years (tax),Access control + encryption,Operations Manager
-Example: Employee records,"ID number, bank details, address",Y,Employees,Payroll and HR administration,Legal obligation,Employment onboarding,HR system,HR only,Payroll provider,No,As required by law,Restricted access + MFA,HR Manager
-Example: Marketing list,"Name, email",N,Subscribers,Email newsletters,Consent (opt-in),Sign-up form,Email platform,Marketing,Email platform,Yes (specify),Until unsubscribe,Access control,Marketing Lead
-,,,,,,,,,,,,,
-,,,,,,,,,,,,,
-,,,,,,,,,,,,,

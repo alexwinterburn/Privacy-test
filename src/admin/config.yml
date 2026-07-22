@@ -1,5 +1,5 @@
 # ─────────────────────────────────────────────────────────────
-# Decap CMS configuration — the admin panel at /admin
+# Decap CMS configuration - the admin panel at /admin
 #
 # AUTH: this uses Netlify's "Git Gateway". One-time setup in Netlify:
 #   1. Site settings → Identity → Enable Identity
@@ -9,7 +9,7 @@
 #
 # Prefer to skip Netlify Identity and use GitHub directly? Comment out the
 # git-gateway block below and use the "github" backend instead (needs a GitHub
-# OAuth app / OAuth provider — see README).
+# OAuth app / OAuth provider - see README).
 #
 # IMPORTANT: set `branch` to the branch your live site deploys from.
 # ─────────────────────────────────────────────────────────────
@@ -18,7 +18,7 @@ backend:
   branch: main
 
 # Lets you preview the CMS locally with `npm run dev` (no cloud login needed)
-# by visiting http://localhost:8080/admin/ — see README.
+# by visiting http://localhost:8080/admin/ - see README.
 local_backend: true
 
 media_folder: "src/assets/img/uploads"   # where uploaded images are saved in the repo

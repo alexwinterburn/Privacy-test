@@ -1,5 +1,5 @@
 /* ============================================================
-   Sentinel Privacy — shared site behaviour
+   Sentinel Privacy - shared site behaviour
    ============================================================ */
 (function () {
   "use strict";
