@@ -55,6 +55,49 @@
   var yr = document.getElementById("year");
   if (yr) yr.textContent = new Date().getFullYear();
 
+  /* ---- Animated counters ---- */
+  var counters = document.querySelectorAll("[data-count]");
+  function runCounter(el) {
+    var target = parseFloat(el.getAttribute("data-count"));
+    var suffix = el.getAttribute("data-suffix") || "";
+    var prefix = el.getAttribute("data-prefix") || "";
+    var decimals = (target % 1 !== 0) ? 1 : 0;
+    var dur = 1400, start = null;
+    function tick(ts) {
+      if (!start) start = ts;
+      var p = Math.min((ts - start) / dur, 1);
+      var eased = 1 - Math.pow(1 - p, 3);
+      var val = (target * eased).toFixed(decimals);
+      el.textContent = prefix + val + suffix;
+      if (p < 1) requestAnimationFrame(tick);
+      else el.textContent = prefix + target.toFixed(decimals) + suffix;
+    }
+    requestAnimationFrame(tick);
+  }
+  if (counters.length) {
+    if ("IntersectionObserver" in window) {
+      var cObs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          if (en.isIntersecting) { runCounter(en.target); cObs.unobserve(en.target); }
+        });
+      }, { threshold: 0.5 });
+      counters.forEach(function (el) { cObs.observe(el); });
+    } else {
+      counters.forEach(runCounter);
+    }
+  }
+
+  /* ---- Header shadow on scroll ---- */
+  var header = document.querySelector(".site-header");
+  if (header) {
+    var onScroll = function () {
+      if (window.scrollY > 8) header.classList.add("scrolled");
+      else header.classList.remove("scrolled");
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+  }
+
   /* ---- Contact form validation (progressive enhancement) ---- */
   var form = document.getElementById("contact-form");
   if (form) {

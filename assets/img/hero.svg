@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 480" role="img" aria-label="Illustration of data protection: a secure shield safeguarding personal information">
+  <defs>
+    <linearGradient id="hg-shield" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#25b6a4"/>
+      <stop offset="1" stop-color="#0f766e"/>
+    </linearGradient>
+    <linearGradient id="hg-card" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#eef4fb"/>
+    </linearGradient>
+    <linearGradient id="hg-gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f6c453"/>
+      <stop offset="1" stop-color="#e5a521"/>
+    </linearGradient>
+    <filter id="hg-soft" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#0a1a30" flood-opacity="0.28"/>
+    </filter>
+  </defs>
+
+  <!-- backdrop rings -->
+  <circle cx="260" cy="235" r="200" fill="#ffffff" opacity="0.05"/>
+  <circle cx="260" cy="235" r="150" fill="#ffffff" opacity="0.06"/>
+
+  <!-- floating data card (top-left) -->
+  <g filter="url(#hg-soft)">
+    <rect x="34" y="60" width="150" height="96" rx="14" fill="url(#hg-card)"/>
+    <circle cx="60" cy="86" r="12" fill="#e8f6f4"/>
+    <path d="M55 86l4 4 7-8" fill="none" stroke="#178576" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="80" y="80" width="82" height="7" rx="3.5" fill="#cfdae8"/>
+    <rect x="80" y="93" width="58" height="7" rx="3.5" fill="#e1e8f1"/>
+    <rect x="50" y="118" width="112" height="7" rx="3.5" fill="#e1e8f1"/>
+    <rect x="50" y="131" width="86" height="7" rx="3.5" fill="#eef2f7"/>
+  </g>
+
+  <!-- floating lock chip (bottom-right) -->
+  <g filter="url(#hg-soft)">
+    <rect x="358" y="330" width="128" height="104" rx="16" fill="url(#hg-card)"/>
+    <rect x="398" y="356" width="48" height="40" rx="8" fill="none" stroke="#0f2540" stroke-width="5"/>
+    <path d="M406 356v-9a16 16 0 0 1 32 0v9" fill="none" stroke="#0f2540" stroke-width="5"/>
+    <circle cx="422" cy="376" r="6" fill="#1f9e8f"/>
+    <rect x="419" y="380" width="6" height="10" rx="3" fill="#1f9e8f"/>
+  </g>
+
+  <!-- main shield -->
+  <g filter="url(#hg-soft)">
+    <path d="M260 96 L372 138 V250 C372 320 322 366 260 392 C198 366 148 320 148 250 V138 Z" fill="url(#hg-shield)"/>
+    <path d="M260 96 L372 138 V250 C372 320 322 366 260 392 C198 366 148 320 148 250 V138 Z" fill="none" stroke="#ffffff" stroke-opacity="0.25" stroke-width="2"/>
+    <!-- inner glow band -->
+    <path d="M260 122 L347 155 V248 C347 306 306 344 260 366 C214 344 173 306 173 248 V155 Z" fill="#ffffff" opacity="0.10"/>
+    <!-- big check -->
+    <path d="M215 246 l32 32 60 -70" fill="none" stroke="#ffffff" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- gold accent dot -->
+    <circle cx="332" cy="176" r="16" fill="url(#hg-gold)"/>
+    <path d="M326 176l4 4 8 -9" fill="none" stroke="#0f2540" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- small orbit dots -->
+  <circle cx="120" cy="300" r="7" fill="#f2b134"/>
+  <circle cx="410" cy="90" r="6" fill="#4fd1c0"/>
+  <circle cx="300" cy="440" r="5" fill="#ffffff" opacity="0.7"/>
+  <circle cx="70" cy="220" r="5" fill="#4fd1c0" opacity="0.8"/>
+</svg>

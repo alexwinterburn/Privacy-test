@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" role="img" aria-label="Information Officer role cover">
+  <defs>
+    <linearGradient id="c2-bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#16324f"/><stop offset="1" stop-color="#0f2540"/></linearGradient>
+    <pattern id="c2-dots" width="26" height="26" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="2" fill="#ffffff" opacity="0.07"/></pattern>
+  </defs>
+  <rect width="800" height="500" fill="url(#c2-bg)"/>
+  <rect width="800" height="500" fill="url(#c2-dots)"/>
+  <circle cx="140" cy="410" r="160" fill="#1f9e8f" opacity="0.10"/>
+  <!-- badge -->
+  <g transform="translate(300 90)">
+    <path d="M100 0 L190 34 V150 C190 220 150 268 100 300 C50 268 10 220 10 150 V34 Z" fill="#ffffff"/>
+    <path d="M100 0 L190 34 V150 C190 220 150 268 100 300 C50 268 10 220 10 150 V34 Z" fill="none" stroke="#e1e8f1" stroke-width="2"/>
+    <circle cx="100" cy="120" r="34" fill="#1f9e8f"/>
+    <circle cx="100" cy="110" r="13" fill="#ffffff"/>
+    <path d="M78 150a22 22 0 0 1 44 0z" fill="#ffffff"/>
+    <rect x="60" y="196" width="80" height="10" rx="5" fill="#cfdae8"/>
+    <rect x="74" y="216" width="52" height="10" rx="5" fill="#e1e8f1"/>
+    <circle cx="160" cy="42" r="20" fill="#f2b134"/><path d="M151 42l6 6 12 -14" stroke="#0f2540" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <circle cx="620" cy="120" r="9" fill="#f2b134"/>
+  <circle cx="660" cy="360" r="7" fill="#4fd1c0"/>
+  <circle cx="180" cy="150" r="6" fill="#4fd1c0" opacity="0.8"/>
+</svg>
