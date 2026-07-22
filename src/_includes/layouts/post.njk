@@ -1,0 +1,83 @@
+{% extends "layouts/base.njk" %}
+
+{% block structuredData %}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": {{ title | dump | safe }},
+    "description": {{ description | dump | safe }},
+    "image": "{{ site.url }}{{ cover }}",
+    "datePublished": "{{ page.date | isoDate }}",
+    "dateModified": "{{ page.date | isoDate }}",
+    "author": { "@type": "Organization", "name": {{ site.name | dump | safe }} },
+    "publisher": { "@type": "Organization", "name": {{ site.name | dump | safe }} },
+    "mainEntityOfPage": "{{ site.url }}{{ page.url }}",
+    "articleSection": {{ category | dump | safe }},
+    "inLanguage": "en-ZA"
+  }
+  </script>
+{% endblock %}
+
+{% block content %}
+  <section class="section">
+    <div class="container">
+      <article class="article">
+        <div class="breadcrumb" style="color:var(--muted)"><a href="index.html">Home</a> · <a href="blog.html">Blog</a> · {{ category }}</div>
+        <div class="article__meta"><span class="pill">{{ category }}</span><span>{{ page.date | readableDate }}</span><span>·</span><span>{{ content | readingTime }} min read</span></div>
+        <h1>{{ title }}</h1>
+        {% if summary %}<p class="lead">{{ summary }}</p>{% endif %}
+
+        <div class="article__hero"><img src="{{ cover }}" alt="{{ coverAlt or title }}" width="800" height="500"></div>
+
+        <div class="article-body">
+          {{ content | safe }}
+
+          {% if tags and tags.length %}
+          <div class="tag-row">
+            {% for t in tags %}<span class="pill">{{ t }}</span>{% endfor %}
+          </div>
+          {% endif %}
+
+          <div class="author-box">
+            <div class="author-box__ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+            <div><b>{{ site.author }}</b><p>We're a South African data-privacy consultancy helping businesses make POPIA practical. We publish under our brand and keep client work confidential.</p></div>
+          </div>
+
+          <div class="share-row">
+            <span>Share:</span>
+            <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ site.url }}{{ page.url }}" aria-label="Share on LinkedIn" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.5 8h4V24h-4V8zM8.5 8h3.8v2.2h.05c.53-1 1.83-2.2 3.77-2.2 4.03 0 4.78 2.65 4.78 6.1V24h-4v-6.9c0-1.65-.03-3.77-2.3-3.77-2.3 0-2.65 1.8-2.65 3.65V24h-4V8z"/></svg></a>
+            <a href="https://twitter.com/intent/tweet?url={{ site.url }}{{ page.url }}&text={{ title | urlencode }}" aria-label="Share on X" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 1.6h3.5l-7.6 8.7L23.7 22h-6.9l-5.4-7.1L5.2 22H1.7l8.1-9.3L.9 1.6h7.1l4.9 6.5 5.9-6.5zm-1.2 18.2h1.9L6.4 3.6H4.3l13.4 16.2z"/></svg></a>
+            <a href="mailto:?subject={{ title | urlencode }}&body={{ site.url }}{{ page.url }}" aria-label="Share by email"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg></a>
+          </div>
+        </div>
+
+        {% set related = collections.posts | exclude(page.url) | limit(2) %}
+        {% if related.length %}
+        <div class="post-more">
+          <h3 style="margin-bottom:20px">Keep reading</h3>
+          <div class="post-grid" style="grid-template-columns:1fr 1fr">
+            {% for post in related %}
+            <a class="post-card" href="{{ post.url | localHref }}">
+              <div class="post-card__media"><img src="{{ post.data.cover }}" alt="{{ post.data.title }}" width="800" height="500"></div>
+              <div class="post-card__body"><div class="post-card__meta"><span class="pill">{{ post.data.category }}</span><span>{{ post.templateContent | readingTime }} min</span></div><h3>{{ post.data.title }}</h3><span class="post-card__link">Read article →</span></div>
+            </a>
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
+      </article>
+    </div>
+  </section>
+
+  <section class="section section--soft">
+    <div class="container">
+      <div class="cta-band">
+        <h2>See your POPIA gaps in 5 minutes</h2>
+        <p>Take our free readiness test and get an instant, categorised snapshot of exactly where your business stands.</p>
+        <a class="btn btn--gold btn--lg" href="assessment.html">Take the free test</a>
+        <a class="btn btn--light btn--lg" href="contact.html">Talk to a specialist</a>
+      </div>
+    </div>
+  </section>
+{% endblock %}

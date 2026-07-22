@@ -1,0 +1,73 @@
+---
+title: "POPIA Blog — Data Privacy Insights for South African Businesses | Sentinel Privacy"
+description: "Practical, plain-language articles on POPIA and data privacy for South African businesses — compliance checklists, Information Officer guidance, marketing rules and more."
+keywords: "POPIA blog, data privacy South Africa, POPIA compliance tips, Information Officer, POPIA marketing, data protection articles"
+permalink: "/blog.html"
+---
+{% extends "layouts/base.njk" %}
+
+{% block structuredData %}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "name": "{{ site.name }} Blog",
+    "description": "Practical POPIA and data privacy insights for South African businesses.",
+    "url": "{{ site.url }}/blog.html",
+    "publisher": { "@type": "Organization", "name": "{{ site.name }}" },
+    "blogPost": [
+      {% for post in collections.posts %}
+      { "@type": "BlogPosting", "headline": {{ post.data.title | dump | safe }}, "url": "{{ site.url }}{{ post.url }}", "datePublished": "{{ post.date | isoDate }}" }{% if not loop.last %},{% endif %}
+      {% endfor %}
+    ]
+  }
+  </script>
+{% endblock %}
+
+{% block content %}
+  <section class="page-head">
+    <div class="container">
+      <div class="breadcrumb"><a href="index.html">Home</a> · Blog</div>
+      <h1>POPIA &amp; Data Privacy Blog</h1>
+      <p>Practical, plain-language guidance to help South African businesses navigate the Protection of Personal Information Act with confidence.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      {% set featured = collections.posts[0] %}
+      {% if featured %}
+      <a class="featured-post reveal" href="{{ featured.url | localHref }}" style="color:inherit">
+        <div class="featured-post__media"><img src="{{ featured.data.cover }}" alt="{{ featured.data.coverAlt or featured.data.title }}" width="800" height="500"></div>
+        <div class="featured-post__body">
+          <div class="post-card__meta"><span class="pill">Featured</span><span>{{ featured.data.category }}</span><span>·</span><span>{{ featured.templateContent | readingTime }} min read</span></div>
+          <h2 style="margin-bottom:12px">{{ featured.data.title }}</h2>
+          <p>{{ featured.data.summary }}</p>
+          <span class="post-card__link" style="margin-top:10px">Read the full article →</span>
+        </div>
+      </a>
+      {% endif %}
+
+      <div class="post-grid" style="margin-top:8px">
+        {% for post in collections.posts | exclude(featured.url) %}
+        <a class="post-card reveal" href="{{ post.url | localHref }}">
+          <div class="post-card__media"><img src="{{ post.data.cover }}" alt="{{ post.data.coverAlt or post.data.title }}" width="800" height="500"></div>
+          <div class="post-card__body">
+            <div class="post-card__meta"><span class="pill">{{ post.data.category }}</span><span>{{ post.templateContent | readingTime }} min read</span></div>
+            <h3>{{ post.data.title }}</h3>
+            <p>{{ post.data.summary }}</p>
+            <span class="post-card__link">Read article →</span>
+          </div>
+        </a>
+        {% endfor %}
+      </div>
+
+      <div class="cta-band reveal" style="margin-top:50px">
+        <h2>Get practical POPIA tips in your inbox</h2>
+        <p>No spam, no legalese — just occasional, useful guidance for South African businesses. (And yes, we honour opt-in consent.)</p>
+        <a class="btn btn--gold btn--lg" href="contact.html">Request updates</a>
+        <a class="btn btn--light btn--lg" href="assessment.html">Take the free test</a>
+      </div>
+    </div>
+  </section>
+{% endblock %}
