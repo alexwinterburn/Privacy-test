@@ -98,10 +98,11 @@
     onScroll();
   }
 
-  /* ---- Contact form validation (progressive enhancement) ---- */
+  /* ---- Contact form validation + submission ---- */
   var form = document.getElementById("contact-form");
   if (form) {
     var alertBox = form.querySelector(".form-alert--success");
+    var errorBox = form.querySelector(".form-alert--error");
 
     function setError(field, on) {
       field.classList.toggle("invalid", on);
@@ -122,19 +123,50 @@
       return ok;
     }
 
+    function showSuccess() {
+      form.style.display = "none";
+      if (errorBox) errorBox.style.display = "none";
+      if (alertBox) {
+        alertBox.style.display = "block";
+        alertBox.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    }
+    function showError() {
+      if (errorBox) {
+        errorBox.style.display = "block";
+        errorBox.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+      submitBtn.disabled = false;
+      submitBtn.textContent = submitLabel;
+    }
+
+    var submitBtn = form.querySelector('button[type="submit"]');
+    var submitLabel = submitBtn ? submitBtn.textContent : "Send message";
+
     form.addEventListener("submit", function (e) {
       e.preventDefault();
+      if (errorBox) errorBox.style.display = "none";
       if (!validate()) {
         var firstBad = form.querySelector(".invalid input, .invalid select, .invalid textarea");
         if (firstBad) firstBad.focus();
         return;
       }
-      // Static site: no backend. Simulate a successful, client-side submission.
-      form.style.display = "none";
-      if (alertBox) {
-        alertBox.style.display = "block";
-        alertBox.scrollIntoView({ behavior: "smooth", block: "center" });
-      }
+
+      if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = "Sending…"; }
+
+      // Submit to Netlify Forms via AJAX so we can keep the inline success state.
+      // (Works once the site is deployed on Netlify with form handling enabled.)
+      var body = new URLSearchParams(new FormData(form)).toString();
+      fetch(form.getAttribute("action") || "/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: body
+      })
+        .then(function (res) {
+          if (res.ok || res.status === 200) showSuccess();
+          else showError();
+        })
+        .catch(showError);
     });
 
     // Clear error state as the user corrects a field

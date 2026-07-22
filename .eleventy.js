@@ -9,11 +9,15 @@ module.exports = function (eleventyConfig) {
   // Static marketing pages are hand-authored HTML. Copy them through verbatim
   // (keeping their exact filenames) instead of running them through templating,
   // so their inline JSON-LD, styles and links stay exactly as written.
-  const STATIC_PAGES = ["index", "about", "services", "faq", "assessment", "contact"];
+  const STATIC_PAGES = ["index", "about", "services", "faq", "assessment", "contact", "resources", "privacy-policy", "paia"];
   STATIC_PAGES.forEach((name) => {
     eleventyConfig.addPassthroughCopy({ [`src/${name}.html`]: `${name}.html` });
     eleventyConfig.ignores.add(`src/${name}.html`);
   });
+
+  // Don't treat downloadable templates (Markdown/CSV in assets) as site
+  // templates — they're passthrough-copied for download, not rendered.
+  eleventyConfig.ignores.add("src/assets/**");
 
   // Blog posts collection, newest first.
   eleventyConfig.addCollection("posts", function (collectionApi) {

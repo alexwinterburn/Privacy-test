@@ -35,7 +35,10 @@ src/                       ← everything the site is built from
 ├── services.html          ← Services
 ├── faq.html               ← FAQ
 ├── assessment.html        ← Take the Test (free POPIA gap tool)
-├── contact.html           ← Contact form
+├── contact.html           ← Contact form (wired for Netlify Forms)
+├── resources.html         ← Free templates / lead magnet
+├── privacy-policy.html    ← Website privacy policy
+├── paia.html              ← PAIA manual
 ├── blog.njk               ← Blog index (auto-lists your posts)
 ├── posts/                 ← ⭐ your blog posts live here, one file each
 │   ├── popia-checklist.md
@@ -44,8 +47,11 @@ src/                       ← everything the site is built from
 │   ├── index.html
 │   └── config.yml
 ├── _includes/            ← shared header/footer + article layout
-├── _data/site.json       ← your domain, email, phone (single source of truth)
-├── css/  js/  assets/     ← styles, scripts, images
+├── _data/site.json       ← your domain & regional details (single source of truth)
+├── css/  js/              ← styles, scripts
+├── assets/
+│   ├── img/               ← illustrations, icons, social image
+│   └── downloads/         ← the free downloadable templates
 └── robots.txt
 .eleventy.js               ← build configuration
 netlify.toml               ← hosting configuration
@@ -142,10 +148,13 @@ Other static hosts (Cloudflare Pages, Vercel, GitHub Pages) also work — use th
 same build command (`npm run build`) and publish folder (`_site`).
 
 ### The contact form
-The form is currently a front-end demo. On Netlify you can enable real
-submissions by adding `netlify` and `name="contact"` attributes to the
-`<form>` in `src/contact.html` (Netlify Forms). Or point it at a service like
-[Formspree](https://formspree.io/). Ask and this can be wired up for you.
+The form is already wired for **Netlify Forms** (`data-netlify="true"` on the
+`<form>` in `src/contact.html`, submitted via AJAX so the inline success
+message still shows). When you deploy on Netlify it works automatically —
+submissions appear under **Forms** in your Netlify dashboard, and you can set
+up email notifications there. No third-party service needed. (Hosting
+elsewhere? Point the form at a service like [Formspree](https://formspree.io/)
+instead.)
 
 ---
 
