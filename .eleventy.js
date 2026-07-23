@@ -16,7 +16,7 @@ module.exports = function (eleventyConfig) {
   });
 
   // Don't treat downloadable templates (Markdown/CSV in assets) as site
-  // templates — they're passthrough-copied for download, not rendered.
+  // templates - they're passthrough-copied for download, not rendered.
   eleventyConfig.ignores.add("src/assets/**");
 
   // Blog posts collection, newest first.

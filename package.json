@@ -2,7 +2,7 @@
   "name": "sentinel-privacy",
   "version": "1.0.0",
   "private": true,
-  "description": "POPIA & data privacy consulting website (South Africa) — static site built with Eleventy, with a Decap CMS admin.",
+  "description": "POPIA & data privacy consulting website (South Africa) - static site built with Eleventy, with a Decap CMS admin.",
   "scripts": {
     "build": "eleventy",
     "start": "eleventy --serve --port=8080",
