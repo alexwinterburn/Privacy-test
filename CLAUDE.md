@@ -53,7 +53,7 @@ Deploy target is **Netlify** (`netlify.toml`): build `npm run build`, publish
 
 ## Project conventions & standing preferences
 
-- **Never use em dashes (—) anywhere.** Use a hyphen ( - ) for a pause, or
+- **Never use em dashes (the U+2014 "long dash" character) anywhere.** Use a hyphen ( - ) for a pause, or
   reword. This applies to all copy, code comments, and commit messages. En
   dashes are only for numeric/day ranges (e.g. Mon-Fri, 1-10). This is a hard
   rule for this project and the owner's general preference.
