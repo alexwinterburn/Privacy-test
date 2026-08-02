@@ -21,9 +21,11 @@ It is an anonymous, brand-first venture (run discreetly as a side business), so
 - Brand name: **Sentinel Privacy**
 - Positioning line: "Protect your business. Respect your customers' data."
 - Market: South African businesses of all sizes needing POPIA compliance.
-- Services offered: POPIA gap assessments, Information Officer support,
-  policies / notices / PAIA manuals, staff awareness training, breach and
-  incident response, and ongoing "compliance-as-a-service".
+- Services offered: POPIA gap assessments, privacy operating model design
+  (advising on and designing a firm's privacy governance, roles and
+  processes), Information Officer support, policies / notices / PAIA manuals,
+  staff awareness training, breach and incident response, and ongoing
+  "compliance-as-a-service".
 - Tone: practical, plain-language, jargon-free, credible, not fear-mongering.
 - Presence shown as "Cape Town, Johannesburg and Durban" plus "remote support
   nationwide". No street address is published.
