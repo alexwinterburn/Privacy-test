@@ -1,5 +1,7 @@
 node_modules/
-_site/
+.next/
+out/
 .cache/
 .DS_Store
 npm-debug.log*
+next-env.d.ts

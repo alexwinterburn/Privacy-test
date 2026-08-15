@@ -1,62 +1,74 @@
 # Sentinel Privacy
 
 Marketing website for **Sentinel Privacy**, a South African data-privacy
-(POPIA) consulting business. Static site built with Eleventy, with a Decap CMS
-admin for the blog. Fast, self-contained, no third-party trackers on public
-pages.
+(POPIA) consulting business. Built with **Next.js (App Router, TypeScript)**
+and exported as a fully static site, with a Decap CMS admin for the blog.
+Fast, self-contained, no third-party trackers on public pages.
 
 ## Commands
 
 ```bash
-npm install        # install build tooling (once)
-npm run build      # build the site into _site/  (Eleventy)
-npm run start      # local preview at http://localhost:8080
-npm run dev        # site + local Decap CMS backend (admin at /admin, no login)
+npm install        # install dependencies (once)
+npm run dev        # local dev server at http://localhost:8080
+npm run build      # static export into out/
+npm run admin      # local Decap CMS backend (admin at /admin, no login)
 ```
 
 Deploy target is **Netlify** (`netlify.toml`): build `npm run build`, publish
-`_site`. Every push to the live branch rebuilds and redeploys.
+`out`. Every push to the live branch rebuilds and redeploys.
 
 ## Architecture
 
-- Source lives in `src/`; Eleventy outputs the finished site to `_site/`
-  (git-ignored). Never edit `_site/` by hand.
-- **Static marketing pages** (`src/index.html`, `about.html`, `services.html`,
-  `faq.html`, `assessment.html`, `contact.html`, `privacy-policy.html`,
-  `paia.html`) are hand-authored HTML. They pass through the build **verbatim**
-  (`htmlTemplateEngine: false` + listed in `STATIC_PAGES` in `.eleventy.js`),
-  so their inline JSON-LD, styles and header/footer are copied unchanged. Edit
-  these files directly.
-- **Blog is generated.** Posts are Markdown in `src/posts/*.md` with front
-  matter; each becomes `blog-<slug>.html` via `src/_includes/layouts/post.njk`.
-  `src/blog.njk` builds the blog index and `src/sitemap.njk` generates
-  `sitemap.xml` - both list posts automatically.
-- Shared chrome for generated pages: `src/_includes/partials/header.njk`,
-  `footer.njk`, and `layouts/base.njk` (SEO head). **Static pages duplicate the
-  header/footer inline** - if you change nav or footer, update the static pages
-  AND the partials to keep them in sync.
-- Central data for generated pages: `src/_data/site.json` (domain, locations,
-  hours). Static pages hardcode the domain and details inline.
-- Admin: `src/admin/index.html` + `config.yml` (Decap CMS, `/admin`).
-- Styling: one design system in `src/css/styles.css`. Behaviour in
-  `src/js/main.js` (nav, FAQ, reveals, counters, contact form) and
-  `src/js/assessment.js` (the POPIA gap test).
+- **Next.js App Router** with `output: "export"` in `next.config.mjs`, so the
+  build produces plain static HTML in `out/`. There is no server at runtime.
+  If we ever add API routes, auth or a client portal, remove that export line.
+- `trailingSlash: true` and `images.unoptimized: true` are required for the
+  static export and clean URLs on any static host.
+- **Pages** live in `app/<route>/page.tsx`. Routes are clean URLs
+  (`/about`, `/services`, `/blog/<slug>`), not `.html` files.
+- **Blog is generated from Markdown** in `content/posts/*.md` with front
+  matter. `lib/posts.ts` reads and renders them (gray-matter + marked);
+  `app/blog/[slug]/page.tsx` uses `generateStaticParams` so every post is
+  prerendered. The blog index and `app/sitemap.ts` list posts automatically.
+- **Shared chrome is componentised**: `components/Header.tsx` and
+  `components/Footer.tsx` are used by `app/layout.tsx`, so nav/footer changes
+  happen in exactly one place.
+- Interactive pieces are client components: `Assessment.tsx` (the POPIA gap
+  test), `ContactForm.tsx`, `FaqAccordion.tsx`, `Reveal.tsx`, `Counter.tsx`.
+- Central data: `lib/site.ts` (domain, email, locations, nav). Change the
+  domain there.
+- SEO: per-page `metadata` exports, JSON-LD injected per page, plus
+  `app/sitemap.ts` and `app/robots.ts` (both generated at build time).
+- Styling: one design system in `app/globals.css`. Class names are shared with
+  the components; keep using those classes rather than adding new systems.
+- Admin: `public/admin/index.html` + `config.yml` (Decap CMS, `/admin`),
+  pointed at `content/posts`.
 
 ## Adding a blog post
 
 - Via CMS: `/admin` -> Blog posts -> New (needs Netlify Identity + Git Gateway
   enabled; see README).
-- By hand: copy a file in `src/posts/`, rename it (`my-post.md` ->
-  `blog-my-post.html`), edit front matter + body, commit. Nothing else to touch.
-- The three posts featured on the home page are listed manually in
-  `src/index.html`; the blog page updates itself.
+- By hand: copy a file in `content/posts/`, rename it (the filename becomes the
+  URL: `my-post.md` -> `/blog/my-post`), edit front matter + body, commit.
+  Nothing else to touch: the blog index, related posts and sitemap update
+  themselves.
+- The home page shows the three most recent posts automatically.
+
+## Gotchas worth remembering
+
+- Front matter `date:` is parsed by YAML into a **Date object**. `lib/posts.ts`
+  normalises it via `toIsoDate()`; don't naively `String(...).slice(0,10)` it,
+  that produces wrong years.
+- `Counter.tsx` server-renders the **final** number and only animates after
+  mount, so static HTML and no-JS visitors see real values, not zeros.
+- Links inside Markdown posts must use clean URLs (`/services/`), not `.html`.
 
 ## Project conventions & standing preferences
 
-- **Never use em dashes (the U+2014 "long dash" character) anywhere.** Use a hyphen ( - ) for a pause, or
-  reword. This applies to all copy, code comments, and commit messages. En
-  dashes are only for numeric/day ranges (e.g. Mon-Fri, 1-10). This is a hard
-  rule for this project and the owner's general preference.
+- **Never use em dashes (the U+2014 "long dash" character) anywhere.** Use a
+  hyphen ( - ) for a pause, or reword. This applies to all copy, code comments,
+  and commit messages. En dashes are only for numeric/day ranges (e.g. Mon-Fri,
+  1-10). This is a hard rule for this project and the owner's general preference.
 - **Anonymous brand.** No named individuals anywhere (owner runs this
   discreetly). Positioning is brand-first / "confidential by design". Do not
   add team names or bios.
@@ -66,15 +78,14 @@ Deploy target is **Netlify** (`netlify.toml`): build `npm run build`, publish
   "Cape Town · Johannesburg · Durban" + "Remote support nationwide" - no street
   address. The contact form is wired for Netlify Forms.
 - **Hero CTA.** The top banner has a single primary (green) button linking to
-  the free test (`assessment.html`) - do not add a second hero button.
+  the free test (`/assessment`) - do not add a second hero button.
 - **SEO.** Every page needs a unique title, meta description, canonical,
   Open Graph + Twitter tags, `geo.region`/`geo.placename` meta, and relevant
-  JSON-LD. Keep `sitemap.xml` (generated) and `robots.txt` current.
+  JSON-LD.
 - **Self-contained.** No external CDNs/fonts/trackers on public pages (the one
   exception is the Decap script on `/admin`, which is owner-only).
-- **Placeholder domain** `sentinelprivacy.co.za` is used throughout until a
-  real domain is chosen. `src/_data/site.json` is the single source for
-  generated pages; static pages need a find-and-replace when the domain changes.
+- **Placeholder domain** `sentinelprivacy.co.za` is used until a real domain is
+  chosen. `lib/site.ts` is the single source of truth for it.
 
 ## Git
 

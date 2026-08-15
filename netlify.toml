@@ -1,7 +1,7 @@
-# Netlify build & deploy configuration
+# Netlify build & deploy configuration (Next.js static export)
 [build]
   command = "npm run build"
-  publish = "_site"
+  publish = "out"
 
 [build.environment]
   NODE_VERSION = "20"

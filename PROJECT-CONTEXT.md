@@ -41,7 +41,8 @@ Pages (all responsive, SEO-optimised, self-contained):
   testimonials.
 - **About Us** - story, values, and an anonymous "expertise" section (three
   disciplines, no names) plus a "confidential by design" statement.
-- **Services** - the six services in detail, plus who we help and the process.
+- **Services** - the seven services in detail (including privacy operating
+  model design), plus who we help and the process.
 - **FAQ** - about 19 South-Africa-specific POPIA questions in an accordion,
   with FAQ structured data for search engines.
 - **Take the Test** - a free, interactive POPIA readiness questionnaire (14
@@ -66,47 +67,46 @@ Design and features:
 
 ## 4. How it is built (tech)
 
-- **Static site generated with Eleventy (11ty).** Source is in `src/`, the
-  built site is output to `_site/`.
-- The hand-authored marketing pages are plain HTML and pass through the build
-  unchanged. The **blog is generated from Markdown** files in `src/posts/`;
-  each becomes a styled `blog-<slug>.html`, and the blog index and sitemap
-  update automatically.
+- **Next.js (App Router + TypeScript)**, exported as a fully static site.
+  Source pages are in `app/`, the built site lands in `out/`. There is no
+  server at runtime, which keeps hosting cheap and simple.
+- The **blog is generated from Markdown** files in `content/posts/`; each
+  becomes a prerendered page at `/blog/<slug>`, and the blog index and
+  sitemap update automatically.
 - **Blog admin via Decap CMS** at `/admin`: a friendly editor (title, date,
   category, cover image, tags, SEO fields, rich-text body) with a Publish
   button. It saves a Markdown file and the site rebuilds itself, so posts can
   be added with no coding.
-- Plain HTML / CSS / vanilla JavaScript otherwise. No front-end framework.
+- Header and footer are React components, so nav changes happen in one place.
 
 Commands:
 ```
-npm install     # install build tooling
-npm run build   # build to _site/
-npm run start   # local preview at http://localhost:8080
-npm run dev     # site + local CMS admin (http://localhost:8080/admin/)
+npm install     # install dependencies
+npm run dev     # local preview at http://localhost:8080
+npm run build   # static export into out/
+npm run admin   # local CMS backend (http://localhost:8080/admin/)
 ```
 
 Hosting: designed for **Netlify** (config in `netlify.toml`): build
-`npm run build`, publish `_site`. Every push rebuilds and redeploys. The
+`npm run build`, publish `out`. Every push rebuilds and redeploys. The
 contact form uses Netlify Forms. The CMS login uses Netlify Identity + Git
 Gateway (a one-time dashboard setup).
 
 ## 5. File structure (orientation)
 
 ```
-src/
-  index.html, about.html, services.html, faq.html,
-  assessment.html, contact.html, privacy-policy.html, paia.html   (static pages)
-  blog.njk                 (blog index, generated)
-  posts/*.md               (blog posts - edit these or use /admin)
-  admin/                   (Decap CMS: index.html + config.yml)
-  _includes/               (shared header/footer + article layout)
-  _data/site.json          (domain + regional details for generated pages)
-  css/styles.css           (design system)
-  js/main.js, js/assessment.js
-  assets/img/              (illustrations, icons, social image)
-.eleventy.js, netlify.toml, package.json
-CLAUDE.md                  (project rules for Claude Code)
+app/                    pages (each folder is a URL)
+  layout.tsx            shared header/footer + site-wide SEO
+  page.tsx              Home
+  about/ services/ faq/ assessment/ contact/
+  privacy-policy/ paia/
+  blog/                 blog index + blog/[slug] for each post
+  sitemap.ts robots.ts  generated at build time
+  globals.css           the design system
+components/             Header, Footer, Assessment, ContactForm, ...
+content/posts/*.md      the blog posts (edit these or use /admin)
+lib/site.ts             domain, email, locations, nav
+public/                 images + the /admin CMS
 ```
 
 ## 6. Hard rules / conventions (please always follow)
@@ -128,8 +128,7 @@ CLAUDE.md                  (project rules for Claude Code)
 ## 7. Before launch (open items)
 
 - Choose the real domain and replace `sentinelprivacy.co.za` throughout
-  (`src/_data/site.json` covers generated pages; static pages need a
-  find-and-replace).
+  (it lives in one place: `lib/site.ts`).
 - Deploy to Netlify, connect the domain, enable Identity + Git Gateway for the
   admin, and confirm the contact form delivers.
 - Replace any placeholder details and illustrative testimonials with real ones
